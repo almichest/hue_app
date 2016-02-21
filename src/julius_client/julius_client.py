@@ -13,10 +13,26 @@ class JuliusClient(object):
     def open(self):
         self.client.connect((self._host, self._port))
 
+        xml = '<ROOT>'
         while True:
             data = self.client.recv(4096).decode('utf-8')
-            # dict = julius_parser.parse(data)
+            print('before data = ******************************')
             print(data)
+            data = data.replace('.\n', '')
+            data = data.replace('WORD="<s>"', '')
+            print('after data = ******************************')
+            print(data)
+            if 0 <= data.find('<INPUT STATUS=\"STARTREC\"'):
+                xml = '<ROOT>'
+
+            xml += data
+            if 0 <= data.find('<INPUT STATUS=\"LISTEN\"'):
+                xml += '</ROOT>'
+                print('xml = ******************************')
+                print(xml)
+                dic = julius_parser.parse(xml)
+                print(dic)
+                xml = ''
 
 
 class JuliusClientReceiver:
