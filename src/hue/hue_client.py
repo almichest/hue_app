@@ -22,8 +22,14 @@ class HueAPIClient(object):
     def connect(self):
         self.bridge.connect()
 
-    def random(self):
+    def on(self):
         lights = self.bridge.get_light_objects()
 
         for light in lights:
-            light.brightness = 255
+            light.on = True
+
+    def off(self):
+        lights = self.bridge.get_light_objects()
+
+        for light in lights:
+            light.on = False
