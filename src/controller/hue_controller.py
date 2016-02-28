@@ -14,6 +14,8 @@ class HueController(JuliusClientListener):
         self.hue_client.connect()
         self.julius_client.open()
 
+    __light_on_words = ['おはよう', 'ただいま']
+    __light_off_words = ['おやすみ', 'いってきます']
     def on_receive(self, data):
         try:
             print('on_receive')
@@ -27,9 +29,9 @@ class HueController(JuliusClientListener):
                 if '@WORD' in dic:
                     word = dic['@WORD']
                     print('word = ' + word)
-                    if word == 'おはよう':
+                    if word in self.__light_on_words:
                         self.hue_client.on()
-                    elif word == 'おやすみ':
+                    elif word in self.__light_off_words:
                         self.hue_client.off()
 
         except:
