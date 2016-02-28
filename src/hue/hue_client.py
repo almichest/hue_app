@@ -9,7 +9,7 @@ class HueAPIClient(object):
         pass
 
     def find_bridge(self):
-        import src.hue.bridge_scanner as bridge_scanner
+        import hue.bridge_scanner as bridge_scanner
 
         while True:
             self.ip = bridge_scanner.get_bridge_ips()[0]

@@ -1,6 +1,6 @@
-from src.hue.hue_client import HueAPIClient
-from src.julius_client.julius_client import JuliusClient
-from src.julius_client.julius_client import JuliusClientListener
+from hue.hue_client import HueAPIClient
+from julius_client.julius_client import JuliusClient
+from julius_client.julius_client import JuliusClientListener
 
 class HueController(JuliusClientListener):
 
@@ -33,7 +33,7 @@ class HueController(JuliusClientListener):
                         self.hue_client.off()
 
         except:
-            print('ERROR')
+            print('ERROR Getting parameter from data: ')
             print(data)
 
 

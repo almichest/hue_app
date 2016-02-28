@@ -1,4 +1,4 @@
-from src.app.hue_controller import HueController
+from app.hue_controller import HueController
 
 def main():
     controller = HueController()

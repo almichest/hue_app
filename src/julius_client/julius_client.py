@@ -1,6 +1,5 @@
 import socket
-from enum import Enum
-import src.julius_client.julius_notification_parser as julius_parser
+import julius_client.julius_notification_parser as julius_parser
 
 class JuliusClient(object):
 
