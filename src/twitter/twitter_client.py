@@ -27,6 +27,11 @@ class TwitterClient(object):
             self._api = tweepy.API(auth)
 
     def post(self, text):
+        print('tweet : ' + text)
         self._api.update_status(text)
 
-TwitterClient().post('おなかいたい')
+    def post_with_date(self, text):
+        from datetime import datetime
+        now = datetime.now()
+        now_str = now.strftime("%H:%M:%S")
+        self.post(text + " at " + now_str)
