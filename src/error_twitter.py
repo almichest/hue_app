@@ -4,7 +4,7 @@ from twitter.twitter_client import TwitterClient
 
 def main():
     client = TwitterClient()
-    client.post_with_date("落ちた")
+    client.post_with_date("@yamazaki_sensei 落ちた")
 
 if __name__ == '__main__':
     try:
