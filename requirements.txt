@@ -1,6 +1,7 @@
 click==6.3
 oauthlib==1.0.3
 phue==0.8
+pytz==2015.7
 requests==2.9.1
 requests-oauthlib==0.6.1
 six==1.10.0

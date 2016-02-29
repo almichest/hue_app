@@ -32,6 +32,9 @@ class TwitterClient(object):
 
     def post_with_date(self, text):
         from datetime import datetime
+        import pytz
         now = datetime.now()
+        now = pytz.utc.localize(now)
+        now = now.astimezone(pytz.timezone('Asia/Tokyo'))
         now_str = now.strftime("%H:%M:%S")
         self.post(text + " at " + now_str)
