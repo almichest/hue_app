@@ -7,4 +7,3 @@ def get_bridge_ips():
     data = json.loads(res)
     return [map['internalipaddress'] for map in data]
 
-print(get_bridge_ips())

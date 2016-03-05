@@ -1,6 +1,7 @@
 from hue.hue_client import HueAPIClient
 from julius_client.julius_client import JuliusClient
 from julius_client.julius_client import JuliusClientListener
+import logger.logger as logger
 
 class HueController(JuliusClientListener):
 
@@ -18,16 +19,14 @@ class HueController(JuliusClientListener):
     __light_off_words = ['おやすみ', 'いってきます']
     def on_receive(self, data):
         try:
-            print('on_receive')
             root = data['ROOT']
             recogout = root['RECOGOUT']
             shypo = recogout['SHYPO']
-            print(shypo)
             whypo = shypo['WHYPO']
-            print(whypo)
             for dic in whypo:
                 if '@WORD' in dic:
                     word = dic['@WORD']
+                    logger.log_with_time('Received' + word)
                     print('word = ' + word)
                     if word in self.__light_on_words:
                         self.hue_client.on()
