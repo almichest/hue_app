@@ -15,8 +15,8 @@ class HueController(JuliusClientListener):
         self.hue_client.connect()
         self.julius_client.open()
 
-    __light_on_words = ['ただいま']
-    __light_off_words = ['おやすみ', 'いってきます']
+    __light_on_words = ['でんきつけて']
+    __light_off_words = ['でんきけして']
     def on_receive(self, data):
         try:
             root = data['ROOT']
