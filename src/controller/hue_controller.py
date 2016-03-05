@@ -26,8 +26,7 @@ class HueController(JuliusClientListener):
             for dic in whypo:
                 if '@WORD' in dic:
                     word = dic['@WORD']
-                    logger.log_with_time('Received' + word)
-                    print('word = ' + word)
+                    logger.log_with_time('Received ' + word)
                     if word in self.__light_on_words:
                         self.hue_client.on()
                     elif word in self.__light_off_words:
