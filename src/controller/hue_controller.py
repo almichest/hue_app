@@ -3,6 +3,11 @@ from julius_client.julius_client import JuliusClient
 from julius_client.julius_client import JuliusClientListener
 import logger.logger as logger
 
+from enum import Enum
+class HueControllerState(Enum):
+    normal  = 0
+    waiting_light = 1
+
 class HueController(JuliusClientListener):
 
     def __init__(self):
@@ -14,9 +19,11 @@ class HueController(JuliusClientListener):
         self.hue_client.find_bridge()
         self.hue_client.connect()
         self.julius_client.open()
+        self.state = HueControllerState.normal
 
-    __light_on_words = ['でんきつけて']
-    __light_off_words = ['でんきけして']
+    __denki = 'でんき'
+    __on_words = ['つけて']
+    __off_words = ['けして']
     def on_receive(self, data):
         try:
             root = data['ROOT']
@@ -27,13 +34,23 @@ class HueController(JuliusClientListener):
                 if '@WORD' in dic:
                     word = dic['@WORD']
                     logger.log_with_time('Received ' + word)
-                    if word in self.__light_on_words:
-                        self.hue_client.on()
-                    elif word in self.__light_off_words:
-                        self.hue_client.off()
+                    self._update_state(word)
 
         except:
             print('ERROR Getting parameter from data: ')
             print(data)
+
+    def _update_state(self, word):
+        if self.state == HueControllerState.normal:
+            if word == self.__denki:
+                self.state = HueControllerState.waiting_light
+            else :
+                self.state = HueControllerState.normal
+        elif self.state == HueControllerState.waiting_light:
+            if word in self.__on_words:
+                self.hue_client.on()
+            elif word in self.__off_words:
+                self.hue_client.off()
+            self.state = HueControllerState.normal
 
 
