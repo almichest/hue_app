@@ -18,8 +18,8 @@ class HueController(JuliusClientListener):
     def open(self):
         self.hue_client.find_bridge()
         self.hue_client.connect()
-        self.julius_client.open()
         self.state = HueControllerState.normal
+        self.julius_client.open()
 
     __denki = 'でんき'
     __on_words = ['つけて']
@@ -41,16 +41,19 @@ class HueController(JuliusClientListener):
             print(data)
 
     def _update_state(self, word):
-        if self.state == HueControllerState.normal:
-            if word == self.__denki:
-                self.state = HueControllerState.waiting_light
-            else :
+        try:
+            if self.state == HueControllerState.normal:
+                if word == self.__denki:
+                    self.state = HueControllerState.waiting_light
+                else :
+                    self.state = HueControllerState.normal
+            elif self.state == HueControllerState.waiting_light:
+                if word in self.__on_words:
+                    self.hue_client.on()
+                elif word in self.__off_words:
+                    self.hue_client.off()
                 self.state = HueControllerState.normal
-        elif self.state == HueControllerState.waiting_light:
-            if word in self.__on_words:
-                self.hue_client.on()
-            elif word in self.__off_words:
-                self.hue_client.off()
-            self.state = HueControllerState.normal
+        except ValueError:
+            print('Error : ' + ValueError)
 
 

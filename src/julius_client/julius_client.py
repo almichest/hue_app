@@ -24,6 +24,7 @@ class JuliusClient(object):
 
     def open(self):
         self.client.connect((self._host, self._port))
+        print('Connected to julius')
 
         xml = '<ROOT>'
         while True:
